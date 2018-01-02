@@ -1,13 +1,13 @@
 package nl.hsleiden.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.security.Principal;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.security.Principal;
 
 @Entity
 @Table(name = "user")
@@ -41,6 +41,8 @@ public class User implements Principal {
     private String firstname;
     private String suffix;
     private String lastname;
+    private String zipcode;
+    private String street;
     private boolean active;
 
     public long getId() {
@@ -97,6 +99,22 @@ public class User implements Principal {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public boolean isActive() {

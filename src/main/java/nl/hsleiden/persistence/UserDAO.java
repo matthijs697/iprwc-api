@@ -1,14 +1,14 @@
 package nl.hsleiden.persistence;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.dropwizard.hibernate.AbstractDAO;
 import nl.hsleiden.model.User;
 import org.hibernate.SessionFactory;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class UserDAO extends AbstractDAO<User> {
@@ -35,16 +35,17 @@ public class UserDAO extends AbstractDAO<User> {
         return result.orElse(uniqueResult(namedQuery("User.FIND_BY_EMAIL").setParameter("email", email)));
     }
 
+    public List findAllUsers() {
+        return list(namedQuery("User.FIND_ALL"));
+    }
+
     public long updateOrCreateUser(User user) {
         User usr = (User) currentSession().merge(user);
         return usr.getId();
     }
 
-    public void deleteUserById(int id) {
-        currentSession().delete(id);
+    public void deleteUser(User user) {
+        currentSession().delete(user);
     }
 
-    public List findAllUsers() {
-        return list(namedQuery("User.FIND_ALL"));
-    }
 }

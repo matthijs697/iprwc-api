@@ -1,14 +1,15 @@
 package nl.hsleiden.service;
 
-import java.util.Collection;
-import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import nl.hsleiden.model.User;
 import nl.hsleiden.persistence.UserDAO;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Collection;
+
 @Singleton
 public class UserService extends BaseService<User> {
+
     private final UserDAO dao;
     
     @Inject
@@ -20,7 +21,7 @@ public class UserService extends BaseService<User> {
         return dao.findAllUsers();
     }
     
-    public User findUserById(int id) {
+    public User findUserById(long id) {
         return requireResult(dao.findUserById(id));
     }
     
@@ -36,10 +37,9 @@ public class UserService extends BaseService<User> {
         dao.updateOrCreateUser(user);
     }
     
-    public void deleteUser(int id) {
+    public void deleteUser(long id) {
         // Controleren of deze gebruiker wel bestaat
         User user = findUserById(id);
-        
-        dao.deleteUserById(id);
+        dao.deleteUser(user);
     }
 }
