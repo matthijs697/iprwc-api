@@ -1,4 +1,4 @@
-apiName: "Matthijss API"
+apiName: "iprwc API"
 
 database:
 # # the name of your JDBC driver
@@ -29,6 +29,8 @@ database:
 
 # # whether or not idle connections should be validated
   checkConnectionWhileIdle: false
+  checkConnectionOnReturn: true
+  checkConnectionOnBorrow: true
 
 assets:
   mappings:
