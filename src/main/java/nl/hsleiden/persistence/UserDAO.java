@@ -39,9 +39,8 @@ public class UserDAO extends AbstractDAO<User> {
         return list(namedQuery("User.FIND_ALL"));
     }
 
-    public long updateOrCreateUser(User user) {
-        User usr = (User) currentSession().merge(user);
-        return usr.getId();
+    public User updateOrCreateUser(User user) {
+        return (User) currentSession().merge(user);
     }
 
     public void deleteUser(User user) {

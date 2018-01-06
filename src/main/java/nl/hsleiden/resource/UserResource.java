@@ -2,23 +2,16 @@ package nl.hsleiden.resource;
 
 import com.google.inject.Singleton;
 import io.dropwizard.auth.Auth;
-import java.util.Collection;
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import io.dropwizard.hibernate.UnitOfWork;
 import nl.hsleiden.model.User;
 import nl.hsleiden.service.UserService;
+
+import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.Collection;
 
 @Singleton
 @Path("/users")
@@ -34,9 +27,9 @@ public class UserResource {
     
     @GET
     @UnitOfWork
-    @RolesAllowed("GUEST")
-    public Collection listUsers() {
-        return service.getAllUsers();
+    @RolesAllowed("ADMIN")
+    public Collection listUsers(@Auth User user) {
+        return service.getAllUsers(user);
     }
     
     @GET
@@ -50,17 +43,17 @@ public class UserResource {
     @POST
     @UnitOfWork
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createUser(@Valid User user) {
-        service.addUser(user);
+    public User createUser(@Valid User user) {
+        return service.addUser(user);
     }
     
     @PUT
     @UnitOfWork
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed("GUEST")
-    public void updateUser(@PathParam("id") int id, @Auth User authenticator, User user) {
-        service.updateUser(authenticator, id, user);
+    @RolesAllowed({"ADMIN", "GUEST"})
+    public User updateUser(@PathParam("id") int id, @Auth User authenticator, User user) {
+        return service.updateUser(authenticator, id, user);
     }
     
     @DELETE

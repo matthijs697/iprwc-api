@@ -17,24 +17,26 @@ public class UserService extends BaseService<User> {
         this.dao = dao;
     }
     
-    public Collection getAllUsers() {
-        return dao.findAllUsers();
+    public Collection getAllUsers(User user) {
+        if (user.hasRole("ADMIN"))
+            return dao.findAllUsers();
+        return null;
     }
     
     public User findUserById(long id) {
         return requireResult(dao.findUserById(id));
     }
     
-    public void addUser(User user) {
-        dao.updateOrCreateUser(user);
+    public User addUser(User user) {
+        return dao.updateOrCreateUser(user);
     }
     
-    public void updateUser(User authenticator, int id, User user) {
+    public User updateUser(User authenticator, int id, User user) {
         User oldUser = findUserById(id);
         if (!authenticator.hasRole("ADMIN")) {
             assertSelf(authenticator, oldUser);
         }
-        dao.updateOrCreateUser(user);
+        return dao.updateOrCreateUser(user);
     }
     
     public void deleteUser(long id) {
