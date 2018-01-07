@@ -32,8 +32,8 @@ public class ProductDAO extends AbstractDAO<Product> {
         return list(namedQuery("Product.FIND_ALL"));
     }
 
-    public long updateOrCreateProduct(Product product) {
-        return persist(product).getId();
+    public Product updateOrCreateProduct(Product product) {
+        return persist(product);
     }
 
     public void deleteProduct(Product product) {

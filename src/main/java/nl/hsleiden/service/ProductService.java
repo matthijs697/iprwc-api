@@ -27,7 +27,7 @@ public class ProductService extends BaseService<Product> {
         return dao.findAllProducts();
     }
 
-    public long updateOrCreateProduct(User auth, Product product) {
+    public Product updateOrCreateProduct(User auth, Product product) {
         if (!auth.hasRole("ADMIN")) {
             throw new ForbiddenException();
         }
