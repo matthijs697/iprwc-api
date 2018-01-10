@@ -8,7 +8,6 @@ import nl.hsleiden.service.UserService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Collection;
@@ -43,7 +42,7 @@ public class UserResource {
     @POST
     @UnitOfWork
     @Consumes(MediaType.APPLICATION_JSON)
-    public User createUser(@Valid User user) {
+    public User createUser(User user) {
         return service.addUser(user);
     }
     
